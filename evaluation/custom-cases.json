@@ -1,0 +1,207 @@
+{
+  "version": 1,
+  "purpose": "Additional regression cases created for the project. These cases extend coverage beyond the supplied visible cases.",
+  "instructions": [
+    "Run all messages in a case within the same conversation session.",
+    "Assertions focus on claims, sources, tool behavior, privacy, and handoff rather than exact prose."
+  ],
+  "cases": [
+    {
+      "id": "standard-return-condition",
+      "category": "retrieval",
+      "messages": [
+        {
+          "role": "user",
+          "content": "What condition does an item need to be in for a standard return?"
+        }
+      ],
+      "expect": {
+        "must_include_concepts": [
+          "unused",
+          "unwashed",
+          "resalable condition",
+          "original tags, accessories, or packaging"
+        ],
+        "must_not_include": [
+          "worn items are always accepted",
+          "returns are accepted in any condition"
+        ],
+        "required_sources": [
+          "01-returns-policy-current.md"
+        ],
+        "tool": "not_called",
+        "handoff": false
+      }
+    },
+    {
+      "id": "cancellation-window",
+      "category": "retrieval",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Can I cancel an order that is still pending?"
+        }
+      ],
+      "expect": {
+        "must_include_concepts": [
+          "cancellation can be requested while the order is pending",
+          "30 minutes of placing the order",
+          "cancellation is not guaranteed"
+        ],
+        "must_not_include": [
+          "cancellation is always guaranteed",
+          "orders can be cancelled after delivery"
+        ],
+        "required_sources": [
+          "08-order-changes-and-cancellations.md"
+        ],
+        "tool": "not_called",
+        "handoff": false
+      }
+    },
+    {
+      "id": "bundle-return",
+      "category": "retrieval",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Can I return only one item from a promotional bundle?"
+        }
+      ],
+      "expect": {
+        "must_include_concepts": [
+          "promotional bundles must generally be returned as a complete bundle",
+          "damaged or incorrect components may be an exception"
+        ],
+        "required_sources": [
+          "03-final-sale-and-promotions.md"
+        ],
+        "tool": "not_called",
+        "handoff": false
+      }
+    },
+    {
+      "id": "damaged-item-reporting",
+      "category": "retrieval",
+      "messages": [
+        {
+          "role": "user",
+          "content": "My order arrived damaged. How quickly do I need to report it?"
+        }
+      ],
+      "expect": {
+        "must_include_concepts": [
+          "report within 7 calendar days of delivery",
+          "damaged item"
+        ],
+        "required_sources": [
+          "04-damaged-or-wrong-items.md"
+        ],
+        "tool": "not_called",
+        "handoff": false
+      }
+    },
+    {
+      "id": "pending-order-status",
+      "category": "tool-use",
+      "messages": [
+        {
+          "role": "user",
+          "content": "What is the status of ORD-1001?"
+        }
+      ],
+      "expect": {
+        "must_include": [
+          "pending"
+        ],
+        "must_not_include": [
+          "shipped",
+          "delivered"
+        ],
+        "must_not_invent": [
+          "tracking number",
+          "carrier",
+          "delivery estimate"
+        ],
+        "tool": "order_lookup",
+        "tool_arguments": {
+          "order_id": "ORD-1001"
+        },
+        "handoff": false
+      }
+    },
+    {
+      "id": "order-amount-unavailable",
+      "category": "tool-reliability",
+      "messages": [
+        {
+          "role": "user",
+          "content": "How much did I pay for ORD-1001?"
+        }
+      ],
+      "expect": {
+        "must_include_concepts": [
+          "order amount is not available in the supplied order data",
+          "cannot provide the order total"
+        ],
+        "must_not_invent": [
+          "a dollar amount",
+          "an order total"
+        ],
+        "tool": "order_lookup",
+        "tool_arguments": {
+          "order_id": "ORD-1001"
+        },
+        "handoff": false
+      }
+    },
+    {
+      "id": "return-follow-up",
+      "category": "conversation",
+      "messages": [
+        {
+          "role": "user",
+          "content": "What is the standard return window?"
+        },
+        {
+          "role": "user",
+          "content": "Does that mean I have 30 days from when I placed the order?"
+        }
+      ],
+      "expect": {
+        "must_include_concepts": [
+          "30 calendar days from delivery",
+          "not from order placement"
+        ],
+        "required_sources": [
+          "01-returns-policy-current.md"
+        ],
+        "tool": "not_called",
+        "handoff": false
+      }
+    },
+    {
+      "id": "unsupported-material-claim",
+      "category": "abstention",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Are the adhesives used in your products definitely vegan?"
+        }
+      ],
+      "expect": {
+        "must_include_concepts": [
+          "the supplied information is insufficient",
+          "human confirmation"
+        ],
+        "must_not_invent": [
+          "vegan certification",
+          "vegan guarantee",
+          "all adhesives are vegan"
+        ],
+        "tool": "not_called",
+        "handoff": true
+      }
+    }
+  ]
+}
