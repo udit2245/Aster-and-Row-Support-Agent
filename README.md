@@ -65,41 +65,49 @@ An AI-powered customer support agent for **Aster & Row** that combines Retrieval
 
 ```
 ---
-## Setup
-1. Clone the repository
-  git clone https://github.com/udit2245/Aster-and-Row-Support-Agent.git
-  cd Aster-and-Row-Support-Agent
+# Setup
 
-Replace the repository URL above with the final repository URL if the repository name or GitHub username differs.
+# 1. Clone the repository
+    git clone https://github.com/udit2245/Aster-and-Row-Support-Agent
+    cd Aster-and-Row-Support-Agent
 
-2. Create a virtual environment
-Windows
-  python -m venv venv
-  venv\Scripts\activate
+# 2. Create and activate virtual environment
+    python -m venv venv
+    venv\Scripts\activate
 
-macOS / Linux
-  python3 -m venv venv
-  source venv/bin/activate
+# 3. Install dependencies
+    pip install -r requirements.txt
 
-3. Install dependencies
-  pip install -r requirements.txt
-Environment Variables
+# 4. Create .env from the example
+    copy .env.example .env
+
+
+**For macOS/Linux:**
+
+    cp .env.example .env
+
+
+**Index the knowledge base**
+
+From the repository root:
+
+    python -m src.ingestion.index
 
 The application requires a Gemini API key.
 
 Create a .env file in the project root:
 
-GEMINI_API_KEY=your_gemini_api_key_here
+    GEMINI_API_KEY=your_gemini_api_key_here
 
 A safe template is provided in:
 
-.env.example
+    .env.example
 
 Running the Agent
 
 After activating the virtual environment and configuring the API key, run:
 
-  python src/main.py
+    python -m src.main
 
 The application can then be used to interact with the support agent.
 
