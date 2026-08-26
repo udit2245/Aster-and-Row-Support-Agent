@@ -177,6 +177,9 @@ Knowledge Base Documents
  Relevant Context
           │
           ▼
+   Top 5 Sources
+          |
+          v
        Gemini
           │
           ▼
